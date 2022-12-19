@@ -20,7 +20,7 @@ def crawler():
     if response.status_code != 200:
         print('access failed')
         return
-    chrome = webdriver.Chrome(r'chromedriver.exe')
+    chrome = webdriver.Chrome(r'./chromedriver.exe')
     chrome.get(url)
     script = 'Object.defineProperty(navigator,"webdriver",{get:()=>undefined,});'
     chrome.execute_script(script)
