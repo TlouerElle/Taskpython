@@ -1,0 +1,31 @@
+2022-12-18 21:11:52.784 | INFO     | __main__:logging:12 - The number of clicks to load is3，Message: invalid selector: Unable to locate an element with the xpath expression //div[@class=] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//div[@class=]' is not a valid XPath expression.
+  (Session info: chrome=108.0.5359.125)
+Stacktrace:
+Backtrace:
+	(No symbol) [0x010CE563]
+	(No symbol) [0x01057FC1]
+	(No symbol) [0x00F4D04D]
+	(No symbol) [0x00F4FD34]
+	(No symbol) [0x00F4FBE5]
+	(No symbol) [0x00F4FE80]
+	(No symbol) [0x00F7BD55]
+	(No symbol) [0x00F7C22B]
+	(No symbol) [0x00FAE612]
+	(No symbol) [0x00F985D4]
+	(No symbol) [0x00FAC9EB]
+	(No symbol) [0x00F98386]
+	(No symbol) [0x00F7163C]
+	(No symbol) [0x00F7269D]
+	GetHandleVerifier [0x01369B82+2658722]
+	GetHandleVerifier [0x0135CB84+2605476]
+	GetHandleVerifier [0x0117825A+620666]
+	GetHandleVerifier [0x01176E80+615584]
+	(No symbol) [0x010605EC]
+	(No symbol) [0x01065958]
+	(No symbol) [0x01065A45]
+	(No symbol) [0x0107050B]
+	BaseThreadInitThunk [0x769600F9+25]
+	RtlGetAppContainerNamedObjectPath [0x774A7BBE+286]
+	RtlGetAppContainerNamedObjectPath [0x774A7B8E+238]
+

@@ -1,0 +1,10 @@
+*__pycache__
+*.DS_Store
+*.py[cod]
+*$py.class
+*.vscode
+qdata.egg-info/
+build/
+dist/
+
+test.py
