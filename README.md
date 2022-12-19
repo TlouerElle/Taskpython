@@ -17,3 +17,4 @@
 ### UserCars：爬取爱卡二手车数据
 ### visualization：初学可视化的小实验
 #### 如果有什么想问我的email：wes0018@aliyun.com(标题注明来意谢谢)
+#### 如果想要git拉取项目请参照网上教程
