@@ -1,6 +1,8 @@
 import time
 import csv
 import sys
+import traceback
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from loguru import logger
@@ -67,8 +69,9 @@ def robot(url, set_count):
             time.sleep(1)
             robot.close()
             robot.switch_to.window(windows[0])
-    except Exception as e:
-        logging(f'The number of clicks to load is{count},{robot.current_url},{e}')
+
+    except Exception:
+        logging(f'The number of clicks to load is {count} ,{robot.current_url},{traceback.format_exc()}')
     checking('All finish')
 
 
@@ -76,5 +79,5 @@ if __name__ == '__main__':
     # url访问目标index
     # set_count点击加载更多次数
     url = 'https://used.xcar.com.cn/search/100-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0/'
-    set_count = 2
+    set_count = 500
     robot(url, set_count)
