@@ -1,12 +1,11 @@
 from selenium import webdriver
-from loguru import logger
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from datetime import datetime
 import warnings
 import sys
-import traceback
+from loguru import logger
 
 
 class Robot:
@@ -20,8 +19,10 @@ class Robot:
         self.driver.maximize_window()
 
     def log_t(self, msg):
+        print(f'\033[1;31m{msg}\033[0m')
         logger.add(sys.stderr, format="{time} {level}", filter="my_module", level="INFO")
-        logger.add(f'log_t/{self.time}.log')
+        logger.remove()
+        logger.add(f'log_t/{self.time}')
         logger.info(f'{msg}')
 
     def wait_ele_click_xpath_safe(self, xpath, timeout=5):
@@ -60,3 +61,15 @@ class Robot:
     def switch_last_window(self):
         handle = self.driver.window_handles
         self.driver.switch_to.window(handle[-1])
+
+    def refresh(self):
+        self.driver.refresh()
+
+    def find_ele_xpath(self, xpath):
+        ele = self.driver.find_element_by_xpath(xpath)
+        if ele:
+            return True
+        else:
+            return False
+
+
