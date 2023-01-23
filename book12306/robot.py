@@ -66,10 +66,13 @@ class Robot:
         self.driver.refresh()
 
     def find_ele_xpath(self, xpath):
-        ele = self.driver.find_element_by_xpath(xpath)
-        if ele:
+        try:
+            ele = self.driver.find_element_by_xpath(xpath)
             return True
-        else:
+        except Exception:
             return False
+
+    def close_window(self):
+        self.driver.close()
 
 

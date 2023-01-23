@@ -21,10 +21,15 @@ class robot_12306:
 
     def login(self):
         self.robot.log_t('start logining')
+        time.sleep(1)
+        if self.robot.find_ele_xpath('//*[@id="ERROR"]'):
+            self.robot.wait_ele_click_xpath_safe('//a[@id="login_user"]')
         self.robot.wait_ele_click_xpath_safe('//li[@class="login-hd-account"]')
         try:
             if self.robot.wait_ele_xpath_safe('//li[@class="nav-item nav-item-w1"]', timeout=60):
                 self.robot.log_t('login success')
+                session_id = self.robot.driver.session_id
+                self.robot.driver.session_id = session_id
         except TimeoutError as e:
             self.robot.log_t(f'login timeout:{e}')
         except Exception as e:
@@ -68,6 +73,11 @@ class robot_12306:
                 'to_station'] and start_time == self.config['start_time'] and to_time == self.config[
                 'to_time'] and is_have != '候补':
                 row.find_element_by_xpath('.//td/a').click()
+                time.sleep(1)
+                if self.robot.find_ele_xpath('//div[@id="content_defaultwarningAlert_hearder"]'):
+                    hint = self.robot.get_ele_text('//div[@id="content_defaultwarningAlert_hearder"]')
+                    self.robot.close_window()
+                    raise self.robot.log_t(f'{hint}')
                 self.robot.wait_ele_xpath_safe('//*[@id="normal_passenger_id"]/li', timeout=10)
                 choices = self.robot.find_eles_xpath('//*[@id="normal_passenger_id"]/li')
                 for choice in choices:
