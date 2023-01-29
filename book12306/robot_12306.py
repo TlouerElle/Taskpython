@@ -36,9 +36,30 @@ class robot_12306:
             self.robot.log_t(f'login false:{traceback.format_exc()}')
 
     @logger.catch
+    def check_time(self):
+        self.robot.log_t('start checking time')
+        time.sleep(5)
+        self.robot.wait_ele_click_xpath_safe('//*[@id="J-xinxichaxun"]/a')
+        self.robot.wait_ele_click_xpath_safe('//*[@id="megamenu-9"]/div[1]/ul/li[5]/a')
+        # todo 查询车票放票时间
+        self.robot.input_clear_xpath('//*[@id="sale_time_date"]')
+        self.robot.send_keys_xpath('//*[@id="sale_time_date"]', self.config['travel_date'])
+        self.robot.send_keys_xpath('//*[@id="saleText"]', self.config['start_station'])
+        self.robot.find_ele_click_xpath('//*[@id="citem_0"]')
+        check_time = ''
+        rows = self.robot.find_eles_xpath('//*[@id="sale-time1"]/div[1]/ul/li')
+        for row in rows:
+            station = row.find_element_by_xpath('.//div[@class="sale-station-name"]').text
+            if self.config['start_station']+'站' in station:
+                check_time = row.find_element_by_xpath('/div[@class="sale-time"]').text.repalace('起售', '')
+        if check_time:
+            self.robot.log_t('finish checking time')
+            return check_time
+        raise '查询起售日期的起售时间失败'
+
+    @logger.catch
     def book(self):
         self.robot.log_t('start booking')
-        time.sleep(5)
         self.robot.find_ele_click_xpath('//li[@class="nav-item nav-item-w1"]')
         self.robot.wait_ele_click_xpath_safe('//*[@id="fromStationText"]')
         self.robot.send_keys_xpath('//*[@id="fromStationText"]', self.config['start_station'])
@@ -48,6 +69,7 @@ class robot_12306:
         self.robot.send_keys_xpath('//*[@id="train_date"]', self.config['travel_date'])
         self.robot.click_to_last_window_xpath('//*[@id="search_one"]')
         self.robot.log_t('search success')
+        # todo 检查起售时间才能继续
         table = '/html/body/div[2]/div[8]/div[8]/table/tbody/tr'
         self.robot.wait_ele_xpath_safe(table)
         rows = self.robot.find_eles_xpath(table)
@@ -98,6 +120,5 @@ class robot_12306:
                     if '抱歉' in hint:
                         raise self.robot.log_t(f'订票失败，{hint}')
                     else:
-                        # todo 将更好适配这一情况
                         self.robot.log_t('成功, 若当日已经购票且时间冲突,12306则会在查询页面显示为订票失败')
                 break
