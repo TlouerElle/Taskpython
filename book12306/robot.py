@@ -17,7 +17,9 @@ class Robot:
         self.driver = webdriver.Chrome(options=self.options, executable_path='./chromedriver.exe')
         self.driver.get('https://kyfw.12306.cn/otn/resources/login.html')
         self.driver.maximize_window()
-
+        while self.find_ele_xpath('//*[@id="ERROR"]'):
+            self.driver.close()
+            self.driver.get('https://kyfw.12306.cn/otn/resources/login.html')
     def log_t(self, msg):
         print(f'\033[1;31m{msg}\033[0m')
         logger.add(sys.stderr, format="{time} {level}", filter="my_module", level="INFO")
@@ -45,7 +47,9 @@ class Robot:
 
     def find_eles_xpath(self, xpath):
         eles = self.driver.find_elements_by_xpath(xpath)
-        return eles
+        if eles:
+            return eles
+        return False
 
     def click_to_last_window_xpath(self, xpath):
         self.find_ele_click_xpath(xpath)

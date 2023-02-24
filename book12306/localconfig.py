@@ -1,6 +1,6 @@
 """
 说明
-travel_person：乘车人，目前支持一人
+travel_person：乘车人，目前支持一人，且无法区分学生票和成人票
 site：座位，即A、B、C、D和F
 start_station：出发地
 to_station：目的地
